@@ -1,0 +1,21 @@
+.text-light-black {
+  color: rgba(0, 0, 0, 0.4)
+}
+
+a.link-special {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+a.link-special:hover {
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.kamel{
+  background-image: url("https://preview.redd.it/erhjhfipbp961.png?width=3840&format=png&auto=webp&s=2cb3f539c57885bc9a0fc706bfbb35c2e179c85a");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
