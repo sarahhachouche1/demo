@@ -1,8 +1,7 @@
 <div class="card">
     <div class="card-header">
       {{pageTitle}}
-    </div>
-  
+    </div> 
     <div class="card-body">
       <div class="row">
         <div class="col-md-2">Filter by:</div>
@@ -27,33 +26,49 @@
               <th>Description</th>
               <th>DueDate</th>
               <th>Status</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let task of filteredTasks">
-              <td>
-                <a [routerLink]="[task.id]"
-                   [queryParams]="{filterBy: listFilter}">
-                  {{ task.status }}
-                </a>
+               <td>
+                  {{ task.title }}
               </td>
               <td>{{ task.description}}</td>
               <td>{{ task.dueDate }}</td>
-              <td>{{ task.status}}</td>
-              <td>
-                <button class="btn btn-outline-primary btn-sm"
-                        [routerLink]="[task.id, 'edit']">
-                  Edit
+          
+              <td class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="bootstrapDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {{taskStatusEnum[task.status]}}
                 </button>
+                <div class="dropdown-menu" aria-labelledby="bootstrapDropdown">
+                  <a class="dropdown-item" (click)="changeStatus(task, 0)"
+                  style="color:red">Pending</a>
+                  <a class="dropdown-item"  style="color: orange"
+                   (click)="changeStatus(task, 1)"
+                   >Inprogress</a>
+                  <a class="dropdown-item"
+                  (click)="changeStatus(task, 2)"
+                  style="color: green"
+
+                >
+                  Completed
+                </a>
+                </div>
+              </td>
+              <td>
+                <button type="button" class="btn btn-outline-danger" mdbRipple rippleColor="dark"  (click)="onDeleteTask(task.id)" 
+                >Delete</button>   
               </td>
             </tr>
           </tbody>
         </table>
-      </div>
-  
+      </div> 
+    </div>  
+    <div style="position: relative; top: -0.5rem; left: 1rem;">
+      <button type="button" class="btn btn-outline-primary" mdbRipple rippleColor="dark" (click) = "onClick()">Add Task</button>
     </div>
-  </div>
-  
+  </div> 
   <div *ngIf="errorMessage"
        class="alert alert-danger">
     Error: {{ errorMessage }}

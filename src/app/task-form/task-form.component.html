@@ -1,0 +1,61 @@
+<div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+    <div class="card text-center" style="width: 90%; max-width: 700px;">
+      <div class="card-header">
+        Create New Task
+      </div>
+      <div class="card-body">
+        <form [formGroup]="taskForm" (ngSubmit)="save()">
+          <div class="form-group row mb-2">
+            <label class="col-md-3 col-form-label" for="titleId">Title</label>
+            <div class="col-md-9">
+              <input class="form-control"
+                     id="titleId"
+                     type="text"
+                     placeholder="Title (required)"
+                     formControlName="title"
+                     [ngClass]="{'is-invalid': (taskForm.get('title')?.touched ||
+                                              taskForm.get('title')?.dirty) &&
+                                              taskForm.get('title')?.invalid }" />
+              <span class="invalid-feedback">
+                <span *ngIf="taskForm.get('title')?.errors?.['required']">
+                  Please enter task title.
+                </span>
+              </span>
+            </div>
+          </div>
+  
+    
+          <div class="form-group row mb-2">
+            <label class="col-md-3 col-form-label" for="descriptionId">Description</label>
+            <div class="col-md-9">
+              <textarea class="form-control"
+                        id="descriptionId"
+                        placeholder="Description (optional)"
+                        formControlName="description"
+              ></textarea>
+            </div>
+          </div> 
+          <div class="form-group row mb-2">
+            <label class="col-md-3 col-form-label" for="dueDateId">Due Date</label>
+            <div class="col-md-4">
+              <input class="form-control"
+                     id="dueDateId"
+                     type="date"
+                     placeholder="Due Date"
+                     formControlName="dueDate"
+              />
+            </div>
+          </div>
+          <div class="card-footer text-left" style="margin-top: 2rem;">
+            <button class="btn btn-primary"
+                    type="submit"
+                    [title]="taskForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                    [disabled]="!taskForm.valid">
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

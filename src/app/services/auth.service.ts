@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { AuthenticationDto } from '../models/AuthenticationDto';
 import { Observable, catchError, map, throwError } from 'rxjs';
 
@@ -14,15 +14,16 @@ export class AuthService {
   }
   
 login(authenticationDto: AuthenticationDto): Observable<any> {
-  return this.http.post('http://localhost:5000/api/authentication/login', authenticationDto, { responseType: 'text' })
+  return this.http.post(`${this.baseURL}/login`, authenticationDto, { responseType: 'text', observe: 'response' })
+  
   .pipe(
-    map((response: any) => {
-      console.log('Received JWT:', response);
-      localStorage.setItem('token',response);
+    map((response: HttpResponse<any>) => {
+      const token = response.body as string; 
+      localStorage.setItem('token', token); 
+      return { status: response.status, token };
     }),
-    catchError((error: any) => {
-      console.error('HTTP Error:', error);
-      return throwError(() => new Error('HTTP Error occurred'));
+    catchError((error) => {
+      return throwError(error);
     })
   );
 }
