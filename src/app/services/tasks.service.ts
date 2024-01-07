@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { Task } from '../models/TaskDto';
 
@@ -7,8 +7,7 @@ import { Task } from '../models/TaskDto';
 @Injectable({
   providedIn: 'root'
 })
-export class TasksService {
- 
+export class TasksService{
 
   private tasksUrl = "http://localhost:5000/api/TaskToDoes";
   constructor(private http : HttpClient) { }
@@ -36,20 +35,25 @@ export class TasksService {
       );
   }
 
-  createTask(task : Task) : Observable<Task>{
-    
-    const { id, ...taskData } = task;
-    console.log(taskData)
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<Task>(this.tasksUrl, task, { headers })
+
+  createTask(task: Task): Observable<any> {
+    return this.http.post(this.tasksUrl, task, {responseType: 'text', observe: 'response' })
       .pipe(
-        tap(data => console.log('createTask: ' + JSON.stringify(data))),
+        map((response: HttpResponse<any>) => {
+          console.log('Inside pipe - map');
+          const data = response.body;
+          const responseData = { status: response.status, data };
+          return responseData;
+        }),
         catchError(error => {
           console.error('Error creating task:', error);
-          return throwError(() => error)
+          return throwError(() => error);
         })
-      );
+      )
   }
+  
+
+
   
   deleteTask(id : number) : Observable<{}>{
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });

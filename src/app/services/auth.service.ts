@@ -12,15 +12,19 @@ export class AuthService {
   constructor(private http : HttpClient){
 
   }
-  
-login(authenticationDto: AuthenticationDto): Observable<any> {
-  return this.http.post(`${this.baseURL}/login`, authenticationDto, { responseType: 'text', observe: 'response' })
+  IsLoggedIn(){
+      if(localStorage.getItem('token')) return true;
+      return false;
+  }
+  login(authenticationDto: AuthenticationDto): Observable<any> {
+    return this.http.post(`${this.baseURL}/login`, authenticationDto, { responseType: 'text', observe: 'response' })
   
   .pipe(
     map((response: HttpResponse<any>) => {
+      console.log(response, 'responseresponse')
       const token = response.body as string; 
       localStorage.setItem('token', token); 
-      return { status: response.status, token };
+      return { status: response.status, token, koko: response?.status };
     }),
     catchError((error) => {
       return throwError(error);

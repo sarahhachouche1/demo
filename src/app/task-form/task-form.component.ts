@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class TaskFormComponent {
   taskForm! : FormGroup;
-  task! : Task;
+  task! : Task | null;
   isSaved : boolean = false;
 
   constructor(private fb: FormBuilder, private taskService: TasksService, private router : Router) { }
@@ -28,13 +28,17 @@ export class TaskFormComponent {
       this.taskService.createTask(this.task)
       .subscribe(
         (response: any) => {
-          if (response.status === 200) {
-             this.router.navigate(['/tasks'], { replaceUrl: true });
+          console.log(response , "fddfv");
+          if (response.status === 201) {
+             this.isSaved = true;
+             console.log("JHJ",response.status)
+           
           }});
     } else {
       console.log('Form data is invalid');
     }
   }
+
 
   ngOnInit(): void {
     this.taskForm = this.fb.group({

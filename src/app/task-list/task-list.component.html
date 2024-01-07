@@ -1,15 +1,15 @@
+<app-navabr></app-navabr>
 <div class="card">
     <div class="card-header">
-      {{pageTitle}}
-    </div> 
-    <div class="card-body">
       <div class="row">
-        <div class="col-md-2">Filter by:</div>
+        <div class="col-md-2">Filter by status:</div>
         <div class="col-md-4">
           <input type="text"
                  [(ngModel)]="listFilter" />
         </div>
       </div>
+    </div> 
+    <div class="card-body">
       <div class="row"
            *ngIf="listFilter">
         <div class="col-md-6">
@@ -38,7 +38,15 @@
               <td>{{ task.dueDate }}</td>
           
               <td class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="bootstrapDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button data-bs-display="static" 
+                 class="btn btn-secondary dropdown-toggle"
+                  type="button" id="bootstrapDropdown"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  disabled="{{ taskStatusEnum[task.status] === taskStatusEnum[0] }}"
+
+                    >
                   {{taskStatusEnum[task.status]}}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="bootstrapDropdown">
@@ -65,11 +73,14 @@
         </table>
       </div> 
     </div>  
-    <div style="position: relative; top: -0.5rem; left: 1rem;">
-      <button type="button" class="btn btn-outline-primary" mdbRipple rippleColor="dark" (click) = "onClick()">Add Task</button>
-    </div>
+    <div class="button-container">
+      <button type="button" class="btn btn-outline-primary" mdbRipple rippleColor="dark" (click)="onClick()">
+        Add Task
+      </button>
   </div> 
   <div *ngIf="errorMessage"
        class="alert alert-danger">
     Error: {{ errorMessage }}
   </div>
+
+<router-outlet></router-outlet>

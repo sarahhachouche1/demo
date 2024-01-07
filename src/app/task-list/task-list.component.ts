@@ -41,7 +41,7 @@ export class TaskListComponent implements OnInit {
   }
   
   changeStatus(task: Task, newStatus: number): void {
-   
+    if (task.status !== 2) {
       const isConfirmed = window.confirm("Are you sure you want to update the status?");
       if (isConfirmed) {
         task.status = newStatus;
@@ -51,7 +51,7 @@ export class TaskListComponent implements OnInit {
           }
         });
       }
-    
+    }
   }
   
   LoadTasks() : void {
@@ -64,7 +64,7 @@ export class TaskListComponent implements OnInit {
     });
   }
   onClick() : void{
-    this.router.navigate(['/create-task']);
+    this.router.navigate(['/tasks/create-task']);
      
   }
   ngOnInit(): void {

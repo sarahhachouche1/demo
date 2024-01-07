@@ -27,8 +27,8 @@ export class LoginComponent {
       };
       this.authService.login(authenticationDto).subscribe(
         (response: any) => {
+          console.log(response, 'fddfvvv')
           if (response.status === 200) {
-             console.log("hi")
              this.router.navigate(['/tasks'], { replaceUrl: true });
           }});
     } else {

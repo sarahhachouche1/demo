@@ -3,3 +3,15 @@
     cursor: pointer;
   }
   
+
+  .card {
+    position: relative;
+    
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2rem; /* Adjust this value to change the distance from the top */
+    margin-right: 5rem; /* Adjust this value to change the distance from the right */
+  }
