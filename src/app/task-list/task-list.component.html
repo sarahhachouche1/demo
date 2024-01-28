@@ -1,22 +1,25 @@
 <app-navabr></app-navabr>
 <div class="card">
-    <div class="card-header">
-      <div class="row">
-        <div class="col-md-2">Filter by status:</div>
-        <div class="col-md-4">
-          <input type="text"
-                 [(ngModel)]="listFilter" />
+    <div class="card-header" >
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-4 d-flex gap-2">
+          <div>
+            Filter by status:
+          </div> 
+          <div class="ml-3">
+            <input type="text"
+            [(ngModel)]="listFilter" />
+          </div>
+          
         </div>
+        <div class="ml-auto p-3" >
+          <button type="button" class="btn btn-outline-primary" mdbRipple rippleColor="dark" (click)="onClick()">
+            Add Task
+          </button>
+      </div> 
       </div>
     </div> 
     <div class="card-body">
-      <div class="row"
-           *ngIf="listFilter">
-        <div class="col-md-6">
-          <h4>Filtered by: {{listFilter}}</h4>
-        </div>
-      </div>
-  
       <div class="table-responsive">
         <table class="table mb-0"
                *ngIf="tasks && tasks.length">
@@ -35,35 +38,33 @@
                   {{ task.title }}
               </td>
               <td>{{ task.description}}</td>
-              <td>{{ task.dueDate }}</td>
+              <td [ngClass]="{ 'overdue': isOverdue(task.dueDate) }">{{ task.dueDate }}</td>
+
           
-              <td class="dropdown">
-                <button data-bs-display="static" 
-                 class="btn btn-secondary dropdown-toggle"
-                  type="button" id="bootstrapDropdown"
+              <td class="dropdown" *ngIf="task.status !== 2; else statusText">
+                <button
+                  data-bs-display="static"
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="bootstrapDropdown"
                   data-toggle="dropdown"
                   aria-haspopup="true"
                   aria-expanded="false"
-                  disabled="{{ taskStatusEnum[task.status] === taskStatusEnum[0] }}"
-
-                    >
-                  {{taskStatusEnum[task.status]}}
+                >
+                  {{ taskStatusEnum[task.status] }}
                 </button>
                 <div class="dropdown-menu" aria-labelledby="bootstrapDropdown">
-                  <a class="dropdown-item" (click)="changeStatus(task, 0)"
-                  style="color:red">Pending</a>
-                  <a class="dropdown-item"  style="color: orange"
-                   (click)="changeStatus(task, 1)"
-                   >Inprogress</a>
-                  <a class="dropdown-item"
-                  (click)="changeStatus(task, 2)"
-                  style="color: green"
-
-                >
-                  Completed
-                </a>
+                  <a class="dropdown-item" (click)="changeStatus(task, 0)" style="color: red">Pending</a>
+                  <a class="dropdown-item" style="color: orange" (click)="changeStatus(task, 1)">Inprogress</a>
+                  <a class="dropdown-item" (click)="changeStatus(task, 2)" style="color: green">Completed</a>
                 </div>
               </td>
+              
+              <ng-template #statusText>
+                <!-- Display text instead of dropdown when task.status is 2 -->
+                <td>{{ taskStatusEnum[task.status] }}</td>
+              </ng-template>
+              
               <td>
                 <button type="button" class="btn btn-outline-danger" mdbRipple rippleColor="dark"  (click)="onDeleteTask(task.id)" 
                 >Delete</button>   
@@ -73,11 +74,6 @@
         </table>
       </div> 
     </div>  
-    <div class="button-container">
-      <button type="button" class="btn btn-outline-primary" mdbRipple rippleColor="dark" (click)="onClick()">
-        Add Task
-      </button>
-  </div> 
   <div *ngIf="errorMessage"
        class="alert alert-danger">
     Error: {{ errorMessage }}

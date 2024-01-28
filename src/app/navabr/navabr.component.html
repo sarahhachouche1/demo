@@ -2,7 +2,7 @@
   <a class='navbar-brand'>{{title}}</a>
   <ul class='nav nav-pills mr-auto'>
     <li><a class='nav-link' routerLink='/tasks'>Task List</a></li>
-    <li><a class='nav-link' routerLink='/subordinates'>Subordinates</a></li>
+    <li><a class='nav-link' routerLink='/subordinates' *ngIf="isManager">Subordinates</a></li>
   </ul>
   <ul class='nav nav-pills'>
     <li class="nav-item">

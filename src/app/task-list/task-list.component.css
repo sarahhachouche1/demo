@@ -8,6 +8,9 @@
     position: relative;
     
   }
+  .overdue {
+    color: red;
+  }
   
   .button-container {
     display: flex;

@@ -7,31 +7,32 @@
     </div>
     <div class="table-responsive">
         <table class="table mb-0"
-               *ngIf="subordinates && subordinates.length">
+               *ngIf="tasks && tasks.length">
           <thead>
             <tr>
-              <th>UserName</th>
-              <th>FirstName</th>
-              <th>LastName</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>DueDate</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let subordinate of subordinates">
+            <tr *ngFor="let task of tasks">
                
                <td>
-                <a [routerLink]="['/subordinates', subordinate.id]">
-                    {{subordinate.username}}
-                </a>
+                    {{task.title}}
               </td>
               <td>
-                {{subordinate.firstName}}
+                {{task.description}}
               </td>
               <td>
-                 {{subordinate.lastName}}
+                 {{task.dueDate}}
               </td>
+              <td>{{taskStatusEnum[task.status]}}</td>
             </tr>
          </tbody>
         </table>
     </div>
 </div>
+
 

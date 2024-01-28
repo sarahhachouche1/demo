@@ -23,9 +23,9 @@ export class TasksService{
     );
   }
 
-  getTask(id : number) : Observable<Task>{
-    const url = `${this.tasksUrl}/${id}`;
-    return this.http.get<Task>(url)
+  getSubordinateTask(id : number) : Observable<Task[]>{
+    const url = `${this.tasksUrl}/subordinates/${id}`;
+    return this.http.get<Task[]>(url)
       .pipe(
         tap(data => console.log('getTask: ' + JSON.stringify(data))),
         catchError(error => {
@@ -42,7 +42,7 @@ export class TasksService{
         map((response: HttpResponse<any>) => {
           console.log('Inside pipe - map');
           const data = response.body;
-          const responseData = { status: response.status, data };
+          const responseData = { status: response.status, data, };
           return responseData;
         }),
         catchError(error => {

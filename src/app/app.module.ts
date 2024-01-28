@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.models';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TokenInterceptor } from './utils/token.interceptor';
 import { SubordinatesComponent } from './subordinates/subordinates.component';
+import { SubordinateTasksComponent } from './subordinate-tasks/subordinate-tasks.component';
 
 @NgModule({
   declarations: [AppComponent,
@@ -22,7 +23,8 @@ import { SubordinatesComponent } from './subordinates/subordinates.component';
      TaskListComponent,
      LoginComponent,
      TaskFormComponent,
-     SubordinatesComponent
+     SubordinatesComponent,
+     SubordinateTasksComponent
    ],
   imports:[
     CommonModule,

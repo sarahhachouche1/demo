@@ -8,12 +8,12 @@ import { taskCreateGuard } from "./services/task-create.guard";
 import { SubordinatesComponent } from "./subordinates/subordinates.component";
 import { jwtDecode } from "jwt-decode";
 import { managerGuard } from "./services/manager.guard";
+import { SubordinateTasksComponent } from "./subordinate-tasks/subordinate-tasks.component";
 
 
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'subordinates', component: SubordinatesComponent, canActivate: [managerGuard], },
     { path: '', redirectTo: '/login', pathMatch: 'full' },
   ];
   @NgModule({
@@ -33,7 +33,25 @@ const routes: Routes = [
         }
       ]
      }
-     ])],
+     ]),
+
+     RouterModule.forChild([{
+      path: 'subordinates',
+      canActivate : [managerGuard],
+      children:[
+        {
+            path : '',
+            component : SubordinatesComponent,
+        },
+        {
+          path: ':id',
+          component : SubordinateTasksComponent,
+          //canDeactivate : [taskCreateGuard]
+        }
+      ]
+     }
+     ]),
+    ],
     exports: [RouterModule]
   
   })

@@ -15,6 +15,8 @@ export class NavabrComponent {
   decoded : any= jwtDecode(this.token?.toString()) ?? {};
   title = `${this.decoded.username}`;
   constructor(private router : Router){}    
+
+  isManager = this.decoded.Role === 'Manager'; 
   logOut() : void{
     console.log(this.decoded);
     localStorage.removeItem('token');

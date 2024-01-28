@@ -21,6 +21,12 @@ export class TaskListComponent implements OnInit {
   errorMessage = '';
 
   _listFilter = '';
+  isOverdue(dueDate: Date): boolean {
+    const today = new Date();
+    const due = new Date(dueDate);
+    return due < today;
+  }
+  
   get listFilter(): string {
     return this._listFilter;
   }
